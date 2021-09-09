@@ -16,22 +16,28 @@ export default function App() {
   }
 
   const creatListItem = (itemData) => {
-    return(
-    <GoalItem id={itemData.index} title={itemData.item.value} onItemDeletePressed={deleteItem} />
+    return (
+      <GoalItem id={itemData.index} title={itemData.item.value} onItemDeletePressed={deleteItem} />
     )
   }
 
-const deleteItem = (itemId)=>{console.log(itemId)}
+  const deleteItem = (itemId) => {
+    setGoalsList(
+      (currentGoalsList) => {
+        return (currentGoalsList.filter((goal) => goal.key != itemId)
+        );
+      });
+  }
 
   return (
     <View style={styles.root}>
 
-     <GoalInput onAddPressed={onBtnAddPressed}/>
+      <GoalInput onAddPressed={onBtnAddPressed} />
 
       <View style={styles.containerList}>
 
         {/* // contentContainerStyle={{ paddingBottom: 56 }} */}
-        <FlatList data={goalsList} renderItem={creatListItem } />
+        <FlatList data={goalsList} renderItem={creatListItem} />
 
       </View>
 
@@ -41,7 +47,7 @@ const deleteItem = (itemId)=>{console.log(itemId)}
 
 const styles = StyleSheet.create({
   root: { marginTop: 128, paddingTop: 16 },
- 
+
   containerList: {
     height: '85%',
     marginStart: 16,
