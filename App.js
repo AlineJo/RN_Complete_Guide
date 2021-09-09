@@ -1,21 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import GoalInput from './Components/AppComponenets/GoalInput';
+import GoalItem from './Components/AppComponenets/ListItemGoal';
+
 
 export default function App() {
+
+  const [goalsList, setGoalsList] = useState([]);
+
+  const [k, setK] = useState(0);
+  // btnAdd onPress handler 
+  const onBtnAddPressed = (goalVal) => {
+    setK(k + 1);
+    setGoalsList(currentGoalsList => [...goalsList, { key: k + "", value: goalVal }]);
+  }
+
+  const creatListItem = (itemData) => {
+    return(
+    <GoalItem id={itemData.index} title={itemData.item.value} onItemDeletePressed={deleteItem} />
+    )
+  }
+
+const deleteItem = (itemId)=>{console.log(itemId)}
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.root}>
+
+     <GoalInput onAddPressed={onBtnAddPressed}/>
+
+      <View style={styles.containerList}>
+
+        {/* // contentContainerStyle={{ paddingBottom: 56 }} */}
+        <FlatList data={goalsList} renderItem={creatListItem } />
+
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  root: { marginTop: 128, paddingTop: 16 },
+ 
+  containerList: {
+    height: '85%',
+    marginStart: 16,
+    marginEnd: 16,
+    marginTop: 64,
   },
+
+
 });
