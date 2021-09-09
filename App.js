@@ -24,8 +24,7 @@ export default function App() {
   const deleteItem = (itemId) => {
     setGoalsList(
       (currentGoalsList) => {
-        return (currentGoalsList.filter((goal) => goal.key != itemId)
-        );
+        return (currentGoalsList.filter((goal) => goal.key != itemId));
       });
   }
 
